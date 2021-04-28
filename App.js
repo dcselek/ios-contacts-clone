@@ -1,14 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View,TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
+import Contacts from './src/components/contacts/contacts';
 import Header from './src/components/header';
 
 export default function App() {
+
+
+  const [contacts, setContacts] = useState([
+    { name: 'AAnnem', surname: '1', id: '1' },
+    { name: 'Xdxd', surname: '2', id: '2' },
+    { name: 'Ecds', surname: '3', id: '3' }
+  ])
+
   return (
-    <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-    <View style={styles.container}>
-      <Header/>
-      <Text style={{paddingTop: 48, color: 'white'}}>Burası kişiler için</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+      <View style={styles.container}>
+        <Header />
+        <View>
+          <FlatList
+            data={contacts}
+            renderItem={({ item }) => (
+              <Contacts item={item}></Contacts>
+            )}
+          />
+        </View>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
