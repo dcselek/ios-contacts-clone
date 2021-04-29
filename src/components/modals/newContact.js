@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
 import SvgUser from '../icons/User';
 
 export default function NewContact({ setModalVisible, modalVisible }) {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
-
+    const SELECTITEMS = [
+        { name: 'phone' },
+        { name: 'email' },
+        { name: 'url' },
+        { name: 'adress' },
+        { name: 'birthday' },
+        { name: 'date' },
+        { name: 'related name' },
+        { name: 'social profile' },
+        { name: 'instant message' }
+    ]
 
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View>
                 {/* Header */}
                 <View style={styles.headerContainer}>
@@ -21,27 +31,44 @@ export default function NewContact({ setModalVisible, modalVisible }) {
                     <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>
                 </View>
                 {/* Picture */}
-                <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
-                    <View style={styles.svgContainer}>
-                        {(name === "") ? <SvgUser width="120px" height="120px" fill="#fff" stroke="#fff" /> : <Text style={{ color: "white", fontSize: 64 }}>{name}{surname}</Text>}
+                <ScrollView>
+                    <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={styles.svgContainer}>
+                            {(name === "") ? <SvgUser width="120px" height="120px" fill="#fff" stroke="#fff" /> : <Text style={{ color: "white", fontSize: 64 }}>{name}{surname}</Text>}
+                        </View>
+                        <TouchableOpacity>
+                            <Text style={{ color: '#0a84ff', fontSize: 16, paddingTop: 12 }}>Add Photo</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
-                        <Text style={{ color: '#0a84ff', fontSize: 16, paddingTop: 12 }}>Add Photo</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* Input */}
-                <View style={styles.FirstInputsContainer}>
-                    <TextInput style={styles.FirstInputs} placeholder="First Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setName(word.substring(0, 1).toUpperCase()); }} />
-                    <TextInput style={styles.FirstInputs} placeholder="First Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setSurname(word.substring(0, 1).toUpperCase()); }} />
-                    <TextInput style={{
-                        color: '#fff',
-                        height: 42,
-                        fontSize: 16,
-                        fontWeight: '500',
-                    }} placeholder="First Name" placeholderTextColor="#8e8e93" />
-                </View>
+
+                    {/* First Inputs */}
+                    <View style={styles.FirstInputsContainer}>
+                        <TextInput style={styles.FirstInputs} placeholder="First Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setName(word.substring(0, 1).toUpperCase()); }} />
+                        <TextInput style={styles.FirstInputs} placeholder="Last Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setSurname(word.substring(0, 1).toUpperCase()); }} />
+                        <TextInput style={{
+                            color: '#fff',
+                            height: 42,
+                            fontSize: 16,
+                            fontWeight: '500',
+                        }} placeholder="Company" placeholderTextColor="#8e8e93" />
+                    </View>
+                    {/* Selectors */}
+                    <View>
+                        {SELECTITEMS.map((items) => {
+                            return (<TouchableHighlight key={items.name} style={styles.selectContainer} underlayColor='#3a3a3c' onPress={() => null}>
+                                <View style={{ flexDirection: 'row', paddingLeft: 24, alignItems: 'center' }}>
+                                    <View style={styles.selectIconContainer}>
+                                        <Text style={styles.selectIcon}>+</Text>
+                                    </View>
+                                    <Text style={styles.selectIconTitle}>add {items.name}</Text>
+                                </View>
+                            </TouchableHighlight>)
+                        })}
+
+                    </View>
+                </ScrollView>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -72,15 +99,37 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     FirstInputsContainer: {
-        backgroundColor: "#3a3a3c",
+        backgroundColor: "#2c2c2e",
         paddingHorizontal: 24,
     },
     FirstInputs: {
         color: '#fff',
-        height: 42,
+        height: 48,
         fontSize: 16,
         fontWeight: '500',
-        borderBottomWidth: 0.3,
-        borderBottomColor: "#8e8e93",
+        borderBottomWidth: 0.7,
+        borderBottomColor: "#3a3a3c",
+    },
+    selectContainer: {
+        backgroundColor: "#2c2c2e",
+        marginTop: 42,
+        paddingVertical: 10,
+    },
+    selectIconContainer: {
+        backgroundColor: '#30d158',
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        alignItems: 'center'
+    },
+    selectIcon: {
+        color: 'white',
+        fontWeight: '500',
+        fontSize: 18,
+    },
+    selectIconTitle: {
+        fontSize: 16,
+        color: 'white',
+        marginLeft: 16,
     }
 })
