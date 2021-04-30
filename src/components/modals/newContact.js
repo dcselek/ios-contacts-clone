@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
-import SvgUser from '../icons/User';
+import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView, ü } from 'react-native';
+import SvgAvatarPerson1 from '../icons/AvatarPerson1'
+
+import { addFirstName } from '../../redux/addContact'
+import { useDispatch } from 'react-redux'
 
 export default function NewContact({ setModalVisible, modalVisible }) {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+
+
+
+
     const SELECTITEMS = [
         { name: 'phone' },
         { name: 'email' },
@@ -18,13 +25,22 @@ export default function NewContact({ setModalVisible, modalVisible }) {
         { name: 'instant message' }
     ]
 
+    const dispatch = useDispatch();
+
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
             <View>
                 {/* Header */}
                 <View style={styles.headerContainer}>
-                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4() })) }}>
                         <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
                     </Pressable>
                     <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>
@@ -34,7 +50,7 @@ export default function NewContact({ setModalVisible, modalVisible }) {
                 <ScrollView>
                     <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={styles.svgContainer}>
-                            {(name === "") ? <SvgUser width="120px" height="120px" fill="#fff" stroke="#fff" /> : <Text style={{ color: "white", fontSize: 64 }}>{name}{surname}</Text>}
+                            {(name === "") ? <SvgAvatarPerson1 width="160px" height="160px" fill="#fff" stroke="#fff" /> : <Text style={{ color: "white", fontSize: 64 }}>{name.substring(0, 1).toUpperCase()}{surname.substring(0, 1).toUpperCase()}</Text>}
                         </View>
                         <TouchableOpacity>
                             <Text style={{ color: '#0a84ff', fontSize: 16, paddingTop: 12 }}>Add Photo</Text>
@@ -43,8 +59,8 @@ export default function NewContact({ setModalVisible, modalVisible }) {
 
                     {/* First Inputs */}
                     <View style={styles.FirstInputsContainer}>
-                        <TextInput style={styles.FirstInputs} placeholder="First Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setName(word.substring(0, 1).toUpperCase()); }} />
-                        <TextInput style={styles.FirstInputs} placeholder="Last Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setSurname(word.substring(0, 1).toUpperCase()); }} />
+                        <TextInput style={styles.FirstInputs} placeholder="First Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setName(word); }} />
+                        <TextInput style={styles.FirstInputs} placeholder="Last Name" placeholderTextColor="#8e8e93" onChangeText={(word) => { setSurname(word); }} />
                         <TextInput style={{
                             color: '#fff',
                             height: 42,

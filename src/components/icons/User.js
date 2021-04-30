@@ -8,9 +8,9 @@ function SvgUser(props) {
       width="1em"
       height="1em"
       viewBox="0 0 24 24"
-      fill="#fff"
+      fill="none"
       stroke="currentColor"
-      strokeWidth={3}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="user_svg__feather user_svg__feather-user"
