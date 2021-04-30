@@ -40,11 +40,13 @@ export default function NewContact({ setModalVisible, modalVisible }) {
             <View>
                 {/* Header */}
                 <View style={styles.headerContainer}>
-                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4() })) }}>
+                    <Pressable onPress={() => { setModalVisible(!modalVisible);}}>
                         <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
                     </Pressable>
                     <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>
-                    <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>
+                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4() })) }}>
+                        {(name === "") ? <Text style={{ color: '#45484a', fontSize: 16 }}>Done</Text> : <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>}
+                    </Pressable>
                 </View>
                 {/* Picture */}
                 <ScrollView>
