@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, FlatList, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, Button } from 'react-native';
 
 import Contacts from './src/components/contacts/contacts';
 import Header from './src/components/header';
@@ -12,17 +12,36 @@ import NewContactModal from './src/components/modals/newContactModal';
 import GroupsButton from './src/components/header/groupsButton';
 
 
-function List() {
+function List({ navigation }) {
+
+
 
   const { rehber } = useSelector((state) => state.contact);
 
+  let DATA = {};
+
+  rehber.map(kisi => {
+    let basHarf = kisi.isim.substring(0, 1).toUpperCase();
+
+    if (typeof DATA[basHarf] !== "object") {
+      DATA[basHarf] = [];
+    }
+    DATA[basHarf].push(kisi);
+  })
+
+  let FUCK = Object.entries(DATA).map(a => { return { title: a[0], data: a[1] } })
+
+  
+
+
   return (
-    <FlatList
-      data={rehber}
-      renderItem={({ item,navigation }) => (
-        <Contacts item={item} navigation={navigation}></Contacts>
+    <SectionList
+      sections={FUCK.sort(function(a, b){ if(a.title < b.title) { return -1; } if(a.title > b.title) { return 1; } return 0; })}
+      keyExtractor={(item) => item.key}
+      renderItem={({ item }) => <Contacts navigation={navigation} item={item} />}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={{ color: "white", paddingHorizontal: 16, paddingVertical: 4, fontSize: 16, backgroundColor: "#3a3a3c", fontWeight: "bold" }}>{title}</Text>
       )}
-      keyExtractor={item => item.key}
     />
   )
 
@@ -44,16 +63,16 @@ function App() {
               <Stack.Screen name="Contacts"
                 component={List}
                 options={{
-                  headerRight: () =>(
+                  headerRight: () => (
                     <NewContactModal />
                   ),
-                  headerLeft: ()=>(
+                  headerLeft: () => (
                     <GroupsButton />
                   )
                 }}
               />
-              <Stack.Screen 
-                name= "Info"
+              <Stack.Screen
+                name="Info"
                 component={UserInfo}
               />
             </Stack.Navigator>
