@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, FlatList, Button } from 'react-native';
 
 import Contacts from './src/components/contacts/contacts';
 import Header from './src/components/header';
+import UserInfo from './src/components/user/userInfo';
 
 import { useSelector } from 'react-redux'
-
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import NewContactModal from './src/components/modals/newContactModal';
+import GroupsButton from './src/components/header/groupsButton';
+
 
 function List() {
 
@@ -16,8 +19,8 @@ function List() {
   return (
     <FlatList
       data={rehber}
-      renderItem={({ item }) => (
-        <Contacts item={item}></Contacts>
+      renderItem={({ item,navigation }) => (
+        <Contacts item={item} navigation={navigation}></Contacts>
       )}
       keyExtractor={item => item.key}
     />
@@ -35,16 +38,23 @@ function App() {
 
     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
       <View style={styles.container}>
-        <Header />
         <View style={{ flex: 1 }}>
           <NavigationContainer theme={DarkTheme}>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-            >
-              <Stack.Screen name="User"
+            <Stack.Navigator>
+              <Stack.Screen name="Contacts"
                 component={List}
+                options={{
+                  headerRight: () =>(
+                    <NewContactModal />
+                  ),
+                  headerLeft: ()=>(
+                    <GroupsButton />
+                  )
+                }}
+              />
+              <Stack.Screen 
+                name= "Info"
+                component={UserInfo}
               />
             </Stack.Navigator>
           </NavigationContainer>

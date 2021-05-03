@@ -5,7 +5,7 @@ import NewContact from './newContact';
 export default function NewContactModal() {
     const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View>
+        <View style={{marginRight: 16}}>
             <Modal
                 animationType="slide"
                 transparent={true}

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
-export default function Contacts({ item, }) {
+export default function Contacts({ item, navigation }) {
 
     const onPress = () => {
         console.log('');
     }
+    
 
     return (
-        <TouchableHighlight style={{alignItems:'center'}} underlayColor='#3a3a3c' onPress={onPress}>
+        <TouchableHighlight style={{alignItems:'center'}} underlayColor='#3a3a3c' onPress={() => navigation.navigate('Info')}>
             <View style={styles.button}>
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>{item.isim}</Text>
             </View>
