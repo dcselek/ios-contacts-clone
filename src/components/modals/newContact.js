@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView, ü } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView, } from 'react-native';
 import SvgAvatarPerson1 from '../icons/AvatarPerson1'
 
 import { addFirstName } from '../../redux/addContact'
@@ -40,7 +40,7 @@ export default function NewContact({ setModalVisible, modalVisible }) {
             <View>
                 {/* Header */}
                 <View style={styles.headerContainer}>
-                    <Pressable onPress={() => { setModalVisible(!modalVisible);}}>
+                    <Pressable onPress={() => { setModalVisible(!modalVisible); }}>
                         <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
                     </Pressable>
                     <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>

@@ -10,7 +10,7 @@ export default function Contacts({ item, }) {
     return (
         <TouchableHighlight style={{alignItems:'center'}} underlayColor='#3a3a3c' onPress={onPress}>
             <View style={styles.button}>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>{item.isim + " " + item.soyisim}</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>{item.isim}</Text>
             </View>
         </TouchableHighlight>
     )
