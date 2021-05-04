@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View, } from 'react-native';
 
 export default function Search(){
     return(
-        <View>
+        <View style={{backgroundColor: "#3C3C434D",paddingTop: 12, paddingHorizontal: 16,marginTop: 0.5}}>
             <TextInput
             style={styles.input}
             placeholder="Search"
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingHorizontal: 12,
         color: 'white',
-        fontSize:16
+        fontSize:16,
     }
 })

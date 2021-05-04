@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, SafeAreaView } from 'react-native';
 
 import Contacts from './src/components/contacts/contacts';
 import Header from './src/components/header';
@@ -10,8 +10,12 @@ import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import NewContactModal from './src/components/modals/newContactModal';
 import GroupsButton from './src/components/header/groupsButton';
+import Search from './src/components/search';
 
 
+
+
+{/* SECTION LIST FOR CONTACTS */ }
 function List({ navigation }) {
 
 
@@ -31,22 +35,23 @@ function List({ navigation }) {
 
   let FUCK = Object.entries(DATA).map(a => { return { title: a[0], data: a[1] } })
 
-  
-
 
   return (
-    <SectionList
-      sections={FUCK.sort(function(a, b){ if(a.title < b.title) { return -1; } if(a.title > b.title) { return 1; } return 0; })}
-      keyExtractor={(item) => item.key}
-      renderItem={({ item }) => <Contacts navigation={navigation} item={item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={{ color: "white", paddingHorizontal: 16, paddingVertical: 4, fontSize: 16, backgroundColor: "#3a3a3c", fontWeight: "bold" }}>{title}</Text>
-      )}
-    />
+    <View>
+      <Search />
+      <SectionList
+        sections={FUCK.sort(function (a, b) { if (a.title < b.title) { return -1; } if (a.title > b.title) { return 1; } return 0; })}
+        keyExtractor={(item) => item.key}
+        renderItem={({ item }) => <Contacts navigation={navigation} item={item} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={{ color: "white", paddingHorizontal: 16, paddingVertical: 4, fontSize: 16, backgroundColor: "#3a3a3c", fontWeight: "bold" }}>{title}</Text>
+        )}
+      />
+    </View>
   )
 
 }
-
+{/* HOME SCREEN */ }
 function App() {
 
   const Stack = createStackNavigator();
@@ -68,7 +73,10 @@ function App() {
                   ),
                   headerLeft: () => (
                     <GroupsButton />
-                  )
+                  ),
+                  headerStyle: {
+                    borderBottomColor: "#3C3C434D"
+                  }
                 }}
               />
               <Stack.Screen
