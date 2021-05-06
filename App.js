@@ -11,6 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import NewContactModal from './src/components/modals/newContactModal';
 import GroupsButton from './src/components/header/groupsButton';
 import Search from './src/components/search';
+import InfoCard from './src/components/header/infoCard';
 
 
 
@@ -45,6 +46,9 @@ function List({ navigation }) {
         renderItem={({ item }) => <Contacts navigation={navigation} item={item} />}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={{ color: "white", paddingHorizontal: 16, paddingVertical: 4, fontSize: 16, backgroundColor: "#3a3a3c", fontWeight: "bold" }}>{title}</Text>
+        )}
+        ListHeaderComponent={() => (
+          <InfoCard/>
         )}
       />
     </View>
@@ -82,6 +86,12 @@ function App() {
               <Stack.Screen
                 name="Info"
                 component={UserInfo}
+                options={{
+                  headerStyle: {
+                    backgroundColor: "transparent"
+                  },
+                  title: ""
+                }}
               />
             </Stack.Navigator>
           </NavigationContainer>
