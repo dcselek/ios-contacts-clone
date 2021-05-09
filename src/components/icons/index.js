@@ -1,2 +1,6 @@
 export { default as AvatarPerson1 } from './AvatarPerson1'
+export { default as Mail } from './Mail'
+export { default as MessageCircle } from './MessageCircle'
+export { default as Phone } from './Phone'
 export { default as User } from './User'
+export { default as Video } from './Video'

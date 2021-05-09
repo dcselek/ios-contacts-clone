@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, SafeAreaView } from 'react-native';
 
 import Contacts from './src/components/contacts/contacts';
-import Header from './src/components/header';
 import UserInfo from './src/components/user/userInfo';
 
 import { useSelector } from 'react-redux'
@@ -10,7 +9,7 @@ import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import NewContactModal from './src/components/modals/newContactModal';
 import GroupsButton from './src/components/header/groupsButton';
-import Search from './src/components/search';
+import Search from './src/components/header/search';
 import InfoCard from './src/components/header/infoCard';
 
 
