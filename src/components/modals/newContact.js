@@ -44,7 +44,7 @@ export default function NewContact({ setModalVisible, modalVisible }) {
                         <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
                     </Pressable>
                     <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>
-                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4(),phone: "+90 539 90 9192" })) }}>
+                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4(),phone: "+90 (539) 90 91 92" })) }}>
                         {(name === "") ? <Text style={{ color: '#45484a', fontSize: 16 }}>Done</Text> : <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>}
                     </Pressable>
                 </View>
