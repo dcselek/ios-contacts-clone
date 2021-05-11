@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, SectionList, SafeAreaView, StatusBar } from 'react-native';
 
 import Contacts from './src/components/contacts/contacts';
 import UserInfo from './src/components/user/userInfo';

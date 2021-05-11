@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView, } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, Pressable, Modal, TouchableOpacity, TextInput, TouchableHighlight, ScrollView, SafeAreaView, Animated, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import SvgAvatarPerson1 from '../icons/AvatarPerson1'
 
 import { addFirstName } from '../../redux/addContact'
@@ -9,12 +9,28 @@ export default function NewContact({ setModalVisible, modalVisible }) {
 
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [phone, setPhone] = useState("");
 
+    const upAnim = useRef(new Animated.Value(0)).current;
+    const scaleAnim = useRef(new Animated.Value(0)).current;
 
+    const upCome = () => {
+        Animated.parallel([
+            Animated.timing(upAnim, {
+                toValue: 15,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 100,
+                useNativeDriver: true
+            })
+        ]).start();
+    }
 
 
     const SELECTITEMS = [
-        { name: 'phone' },
         { name: 'email' },
         { name: 'url' },
         { name: 'adress' },
@@ -35,21 +51,24 @@ export default function NewContact({ setModalVisible, modalVisible }) {
     }
 
 
+
+
+
     return (
-        <SafeAreaView style={styles.container}>
-            <View>
-                {/* Header */}
-                <View style={styles.headerContainer}>
-                    <Pressable onPress={() => { setModalVisible(!modalVisible); }}>
-                        <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
-                    </Pressable>
-                    <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>
-                    <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4(),phone: "+90 (539) 90 91 92" })) }}>
-                        {(name === "") ? <Text style={{ color: '#45484a', fontSize: 16 }}>Done</Text> : <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>}
-                    </Pressable>
-                </View>
-                {/* Picture */}
-                <ScrollView>
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+            <SafeAreaView style={styles.container}>
+                <View>
+                    {/* Header */}
+                    <View style={styles.headerContainer}>
+                        <Pressable onPress={() => { setModalVisible(!modalVisible); }}>
+                            <Text style={{ color: '#0a84ff', fontSize: 16 }}>Cancel</Text>
+                        </Pressable>
+                        <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>New Contact</Text>
+                        <Pressable onPress={() => { setModalVisible(!modalVisible); dispatch(addFirstName({ isim: name, soyisim: surname, key: uuidv4(), phone: phone })) }}>
+                            {(name === "") ? <Text style={{ color: '#45484a', fontSize: 16 }}>Done</Text> : <Text style={{ color: '#0a84ff', fontSize: 16 }}>Done</Text>}
+                        </Pressable>
+                    </View>
+                    {/* Picture */}
                     <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={styles.svgContainer}>
                             {(name === "") ? <SvgAvatarPerson1 width="160px" height="160px" fill="#fff" stroke="#fff" /> : <Text style={{ color: "white", fontSize: 64 }}>{name.substring(0, 1).toUpperCase()}{surname.substring(0, 1).toUpperCase()}</Text>}
@@ -70,10 +89,32 @@ export default function NewContact({ setModalVisible, modalVisible }) {
                             fontWeight: '500',
                         }} placeholder="Company" placeholderTextColor="#8e8e93" />
                     </View>
-                    {/* Selectors */}
+                    {/* Add Other Data */}
                     <View>
+
+                        <View>
+                            <Animated.View style={[styles.selectContainer, { borderBottomWidth: 0.7, borderBottomColor: "#3a3a3c", opacity: upAnim, marginTop: 26, flexDirection: "row", alignItems: "center", transform: [{ scaleY: scaleAnim }, { translateY: upAnim }] }]}>
+                                <Pressable>
+                                    <View style={[styles.selectIconContainer, { backgroundColor: "red", marginLeft: 24 }]}>
+                                        <Text style={{ fontSize: 18, color: "white", fontWeight: '500' }}>-</Text>
+                                    </View>
+                                </Pressable>
+                                <Text style={[styles.selectIconTitle, { color: "#0a84ff" }]}>mobile</Text>
+                                <TextInput placeholder="Phone" placeholderTextColor="#8e8e93" style={styles.inputStyle} keyboardType= "numeric" onChangeText={(word) => { setPhone(word); }} />
+                            </Animated.View>
+                            <Animated.View style={{ transform: [{ translateY: upAnim }] }}>
+                                <TouchableHighlight style={[styles.selectContainer]} underlayColor='#3a3a3c' onPress={() => { upCome(); }}>
+                                    <View style={{ flexDirection: 'row', paddingLeft: 24, alignItems: 'center' }}>
+                                        <View style={styles.selectIconContainer}>
+                                            <Text style={styles.selectIcon}>+</Text>
+                                        </View>
+                                        <Text style={styles.selectIconTitle}>add phone</Text>
+                                    </View>
+                                </TouchableHighlight>
+                            </Animated.View>
+                        </View>
                         {SELECTITEMS.map((items) => {
-                            return (<TouchableHighlight key={items.name} style={styles.selectContainer} underlayColor='#3a3a3c' onPress={() => null}>
+                            return (<TouchableHighlight key={items.name} style={[styles.selectContainer, { marginTop: 42 }]} underlayColor='#3a3a3c' onPress={() => null}>
                                 <View style={{ flexDirection: 'row', paddingLeft: 24, alignItems: 'center' }}>
                                     <View style={styles.selectIconContainer}>
                                         <Text style={styles.selectIcon}>+</Text>
@@ -83,10 +124,11 @@ export default function NewContact({ setModalVisible, modalVisible }) {
                             </TouchableHighlight>)
                         })}
 
+
                     </View>
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+                </View>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -130,7 +172,6 @@ const styles = StyleSheet.create({
     },
     selectContainer: {
         backgroundColor: "#2c2c2e",
-        marginTop: 42,
         paddingVertical: 10,
     },
     selectIconContainer: {
@@ -149,5 +190,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         marginLeft: 16,
+    },
+    inputStyle: {
+        backgroundColor: "transparent",
+        flex: 1,
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '500',
+        paddingLeft: 24
     }
 })
